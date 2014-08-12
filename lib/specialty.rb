@@ -23,7 +23,7 @@ class Specialty
     results.each do |result|
       @doctors_list << Doctor.new({:name => result['name'],
                                    :specialty_id => result['specialty_id'].to_i })
-      end
+    end
     @doctors_list
   end
 

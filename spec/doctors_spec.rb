@@ -36,5 +36,24 @@ describe Doctor do
     expect(doctor1.patient_list).to eq [patient1]
   end
 
+  it "deletes a doctor and all thier patients" do
+    doctor1 = Doctor.new({:name => "Ralph Winston", :specialty_id => 1})
+    doctor2 = Doctor.new({:name => "Ralph Winston", :specialty_id => 1})
+    doctor1.save
+    doctor2.save
+    patient1 = Patient.new({:name => "John Doe", :birthdate => "2001-01-01",
+                            :doctor_id => doctor1.id})
+    patient2 = Patient.new({:name => "John Doe", :birthdate => "2001-01-01",
+                            :doctor_id => doctor2.id})
+    patient1.save
+    patient2.save
+    doctor1.delete
+    expect(Doctor.all).to eq [doctor2]
+    expect(Patient.all).to eq [patient2]
+  end
+
+
+
+
 
 end

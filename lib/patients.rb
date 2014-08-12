@@ -1,6 +1,6 @@
 class Patient
 
-  attr_reader :name, :birthdate, :doctor_id
+  attr_reader :name, :birthdate, :doctor_id, :id
 
   def initialize(attributes)
     @name = attributes[:name]
@@ -19,8 +19,14 @@ class Patient
   end
 
   def save
-    DB.exec("INSERT INTO patients (name, birthdate, doctor_id) VALUES ('#{@name}', '#{@birthdate}',
-              '#{@doctor_id}');")
+    results = DB.exec("INSERT INTO patients (name, birthdate, doctor_id) VALUES ('#{@name}', '#{@birthdate}',
+              '#{@doctor_id}') RETURNING id;")
+    @id = results.first['id'].to_i
+    @id
+  end
+
+  def delete
+    DB.exec("DELETE FROM patients WHERE id = '#{self.id}';")
   end
 
   def ==(another_patient)

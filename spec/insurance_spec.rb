@@ -27,4 +27,12 @@ describe Insurance do
     expect(insurance_company1).to eq insurance_company2
   end
 
+  it "lists all the doctors that accept the insurance company" do
+    insurance_company1 = Insurance.new({:company => "Shield Net"})
+    insurance_company1.save
+    doctor1 = Doctor.new({:name => "Ralph Winston", :insurance_id => insurance_company1.id})
+    doctor1.save
+    expect(insurance_company1.doctors_list).to eq [doctor1]
+  end
+
 end
