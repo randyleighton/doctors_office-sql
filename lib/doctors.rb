@@ -1,10 +1,11 @@
 class Doctor
 
-  attr_reader :name, :specialty, :id
+  attr_reader :name, :specialty_id, :id
 
   def initialize(attributes)
     @name = attributes[:name]
-    @specialty = attributes[:specialty]
+    @specialty_id = attributes[:specialty_id]
+    @id
   end
 
 
@@ -12,19 +13,19 @@ class Doctor
     results = DB.exec("SELECT * FROM doctors;")
     @doctors = []
     results.each do |result|
-      @doctors << Doctor.new({:name => result['name'], :specialty => result['specialty']})
+      @doctors << Doctor.new({:name => result['name'], :specialty_id => result['specialty_id'].to_i})
     end
     @doctors
   end
 
   def save
-    results = DB.exec("INSERT INTO doctors (name, specialty) VALUES ('#{@name}', '#{@specialty}') RETURNING id;")
+    results = DB.exec("INSERT INTO doctors (name, specialty_id) VALUES ('#{@name}', '#{@specialty_id}') RETURNING id;")
     @id = results.first['id'].to_i
     @id
   end
 
   def ==(another_doctor)
-    self.name == another_doctor.name && self.specialty == another_doctor.specialty
+    self.name == another_doctor.name && self.specialty_id == another_doctor.specialty_id
   end
 
   def patient_list
@@ -36,6 +37,5 @@ class Doctor
     end
     @patient_list
   end
-
 
 end
