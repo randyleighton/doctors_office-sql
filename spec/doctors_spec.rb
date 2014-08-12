@@ -30,9 +30,10 @@ describe Doctor do
   it "allows you to assign a patient to a doctor" do
     doctor1 = Doctor.new({:name => "Ralph Winston", :specialty => "Pediatrician"})
     doctor1.save
-    patient1 = Patient.new({:name => "John Doe", :birthdate => "2001-01-01"})
+    patient1 = Patient.new({:name => "John Doe", :birthdate => "2001-01-01",
+                            :doctor_id => doctor1.id})
     patient1.save
-    expect(doctor1.patients).to eq [patient1]
+    expect(doctor1.patient_list).to eq [patient1]
   end
 
 

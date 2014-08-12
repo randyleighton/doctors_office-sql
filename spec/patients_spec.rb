@@ -25,4 +25,5 @@ describe Patient do
     patient2.save
     expect(patient1).to eq patient2
   end
+
 end
