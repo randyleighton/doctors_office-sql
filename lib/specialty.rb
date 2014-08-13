@@ -36,4 +36,10 @@ class Specialty
   def ==(another_specialty)
     self.type == another_specialty.type
   end
+
+  def delete
+    DB.exec("DELETE FROM specialty WHERE id = '#{self.id}")
+    DB.exec("DELETE FROM doctors WHERE specialty_id = '#{self.id}';")
+    DB.exec("DELETE FROM patients WHERE doctor_id = '#{self.id}';")
+  end
 end
