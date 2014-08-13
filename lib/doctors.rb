@@ -52,4 +52,9 @@ class Doctor
     DB.exec("INSERT INTO doctors (insurance_id) VALUES ('#{ins_id}');")
     @insurance_id = ins_id
   end
+
+  def add_specialty(spec_id)
+    DB.exec("INSERT INTO doctors (specialty_id) VALUES ('#{spec_id}');")
+    @specialty_id = spec_id
+  end
 end
