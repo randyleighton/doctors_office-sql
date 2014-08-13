@@ -33,4 +33,8 @@ class Patient
     self.name == another_patient.name && self.birthdate == another_patient.birthdate
   end
 
+  def add_doctor(doc_id)
+    DB.exec("INSERT INTO patients (doctor_id) VALUES('#{doc_id}');")
+    @doctor_id = doc_id
+  end
 end

@@ -36,4 +36,12 @@ describe Patient do
     expect(Patient.all).to eq [patient2]
   end
 
+  it 'adds/update a doctor for a patient' do
+    patient1 = Patient.new({:name => "John Doe", :birthdate => "2001-01-01", :doctor_id => 2})
+    patient1.save
+    doctor1 = Doctor.new({:name => "Ralph Winston"})
+    doctor1.save
+    patient1.add_doctor(doctor1.id)
+    expect(patient1.doctor_id).to eq doctor1.id
+  end
 end
