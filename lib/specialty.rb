@@ -40,11 +40,15 @@ class Specialty
   def delete
     #deleting the specialty and the doctors with that specialty
     #also deleting the patients of those doctors
+    @doctors_with_this_specialty = []
     DB.exec("DELETE FROM specialties WHERE id = '#{self.id}';")
-    DB.exec("DELETE FROM doctors WHERE specialty_id = '#{self.id}';")
-    result = DB.exec("SELECT * FROM doctors where specialty_id = '#{self.id}';")
-    binding.pry
-    doc_id = result.first['id'].to_i
-    DB.exec("DELETE FROM patients WHERE doctor_id = '#{doc_id}';")
+    results = DB.exec("SELECT * FROM doctors where specialty_id = '#{self.id}';")
+    results.each do |result|
+      @doctors_with_this_specialty << result['id'].to_i
+    end
+    @doctors_with_this_specialty.each do |doc_id|
+      DB.exec("DELETE FROM patients WHERE doctor_id = '#{doc_id}';")
+      DB.exec("DELETE FROM doctors WHERE id = '#{doc_id}';")
+    end
   end
 end

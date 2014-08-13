@@ -39,22 +39,26 @@ describe Specialty do
   it 'deletes a specialty' do
     specialty1 = Specialty.new({:type => "Pediatrics"})
     specialty2 = Specialty.new({:type => "Family"})
+    specialty1.save
+    specialty2.save
     doctor1 = Doctor.new({:name => "Ralph Winston", :specialty_id => specialty1.id})
     doctor2 = Doctor.new({:name => "Mike Brown", :specialty_id => specialty2.id})
+    doctor3 = Doctor.new({:name => "Mickey Donovan", :specialty_id => specialty2.id})
+    doctor4 = Doctor.new({:name => "Ray Donovan", :specialty_id => specialty2.id})
+    doctor1.save
+    doctor2.save
+    doctor3.save
+    doctor4.save
     patient1 = Patient.new({:name => "John Doe", :birthdate => "2001-01-01",
                             :doctor_id =>doctor1.id})
     patient2 = Patient.new({:name => "John Choe", :birthdate => "2000-01-01",
                             :doctor_id => doctor2.id})
-    doctor1.save
-    doctor2.save
     patient1.save
     patient2.save
-    specialty1.save
-    specialty2.save
-    # specialty1.delete
-    expect(Specialty.all).to eq [specialty2]
-    expect(Doctor.all).to eq [doctor2]
-    expect(Patient.all).to eq [patient2]
+    specialty2.delete
+    expect(Specialty.all).to eq [specialty1]
+    expect(Doctor.all).to eq [doctor1]
+    expect(Patient.all).to eq [patient1]
   end
 
 
