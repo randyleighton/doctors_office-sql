@@ -1,12 +1,13 @@
 class Doctor
 
-  attr_reader :name, :specialty_id, :id, :insurance_id
+  attr_reader :name, :specialty_id, :id, :insurance_id, :patient_count
 
   def initialize(attributes)
     @name = attributes[:name]
     @specialty_id = attributes[:specialty_id]
     @insurance_id = attributes[:insurance_id]
     @id
+    @patient_count
   end
 
 
@@ -36,7 +37,10 @@ class Doctor
     self.name == another_doctor.name && self.specialty_id == another_doctor.specialty_id
   end
 
-
+  def patient_count(doc_id)
+    results = DB.exec("SELECT COUNT (*) FROM patients WHERE doctor_id ='#{doc_id}';")
+    @patient_count = results.first['count'].to_i
+  end
 
   def patient_list
     @patient_list = []

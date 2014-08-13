@@ -72,5 +72,19 @@ describe Doctor do
     doctor1.add_specialty(specialty2.id)
     expect(doctor1.specialty_id). to eq specialty2.id
   end
+  it 'returns a patient count for a doctor' do
+    doctor1 = Doctor.new({:name => "Ralph Winston"})
+    doctor1.save
+    patient1 = Patient.new({:name => "John Doe", :birthdate => "2001-01-01",
+                            :doctor_id => doctor1.id})
+    patient2 = Patient.new({:name => "Jake Driscoll", :birthdate => "2001-01-01",
+                            :doctor_id => doctor1.id})
+    patient3 = Patient.new({:name => "Snake Plisskin", :birthdate => "2001-01-01",
+                            :doctor_id => doctor1.id})
+    patient1.save
+    patient2.save
+    patient3.save
+    expect(doctor1.patient_count(doctor1.id)).to eq 3
+  end
 
 end
