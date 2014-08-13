@@ -5,6 +5,7 @@ require './lib/doctors'
 require './lib/patients'
 require './lib/specialty'
 require './lib/insurance'
+require './lib/appointments'
 
 DB = PG.connect(:dbname => 'doctors_office')
 RSpec.configure do |config|
