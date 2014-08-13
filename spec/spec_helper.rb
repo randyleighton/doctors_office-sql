@@ -14,5 +14,6 @@ RSpec.configure do |config|
     DB.exec("DELETE FROM patients *;")
     DB.exec("DELETE FROM specialties *;")
     DB.exec("DELETE FROM insurance *;")
+    DB.exec("DELETE FROM appointments *;")
   end
 end
