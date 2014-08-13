@@ -38,8 +38,13 @@ class Specialty
   end
 
   def delete
-    DB.exec("DELETE FROM specialty WHERE id = '#{self.id}")
+    #deleting the specialty and the doctors with that specialty
+    #also deleting the patients of those doctors
+    DB.exec("DELETE FROM specialties WHERE id = '#{self.id}';")
     DB.exec("DELETE FROM doctors WHERE specialty_id = '#{self.id}';")
-    DB.exec("DELETE FROM patients WHERE doctor_id = '#{self.id}';")
+    result = DB.exec("SELECT * FROM doctors where specialty_id = '#{self.id}';")
+    binding.pry
+    doc_id = result.first['id'].to_i
+    DB.exec("DELETE FROM patients WHERE doctor_id = '#{doc_id}';")
   end
 end
