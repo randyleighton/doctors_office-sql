@@ -52,7 +52,16 @@ describe Doctor do
     expect(Patient.all).to eq [patient2]
   end
 
-
+  it 'adds an insurance company to a doctor'  do
+    insurance_company1 = Insurance.new({:company => "Aflac Cross"})
+    insurance_company1.save
+    doctor1 = Doctor.new({:name => "Ralph Winston", :insurance_id => insurance_company1.id})
+    doctor1.save
+    insurance_company2 = Insurance.new({:company => "Red Shield"})
+    insurance_company2.save
+    doctor1.add_insurance(insurance_company2.id)
+    expect(doctor1.insurance_id).to eq insurance_company2.id
+  end
 
 
 

@@ -35,4 +35,16 @@ describe Insurance do
     expect(insurance_company1.doctors_list).to eq [doctor1]
   end
 
+  it "drop an insurance carrier and updates the doctor with a new one" do
+    insurance_company1 = Insurance.new({:company => "Aflac Cross"})
+    insurance_company2 = Insurance.new({:company => "Red Shield"})
+    insurance_company1.save
+    insurance_company2.save
+    doctor1 = Doctor.new({:name => "Ralph Winston", :insurance_id => insurance_company1.id})
+    doctor1.save
+    insurance_company1.delete
+    expect(Insurance.all).to eq [insurance_company2]
+    expect(Doctor.all.first.insurance_id).to eq nil
+  end
+
 end

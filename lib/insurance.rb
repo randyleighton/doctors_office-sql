@@ -2,11 +2,12 @@ require 'pry'
 
 class Insurance
 
-  attr_reader :company, :id
+  attr_reader :company, :id, :doctors_updated_insurance_id
 
   def initialize(attributes)
     @company = attributes[:company]
     @id
+    @doctors_updated_insurance_id
   end
 
   def self.all
@@ -36,5 +37,13 @@ class Insurance
                               :insurance_id => result['insurance_id'].to_i})
     end
     @doctors_list
+  end
+
+  def delete
+    #this deletes an insurance carrier from the insurance table
+    #this also updates the doctors insurance_id to reflect that change
+    DB.exec("DELETE FROM insurance WHERE id = '#{self.id}';")
+    DB.exec("UPDATE doctors SET insurance_id = null WHERE insurance_id = '#{self.id}';")
+
   end
 end

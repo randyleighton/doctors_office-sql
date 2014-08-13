@@ -36,6 +36,8 @@ class Doctor
     self.name == another_doctor.name && self.specialty_id == another_doctor.specialty_id
   end
 
+
+
   def patient_list
     @patient_list = []
     results = DB.exec("SELECT * FROM patients WHERE doctor_id = '#{self.id}';")
@@ -46,4 +48,8 @@ class Doctor
     @patient_list
   end
 
+  def add_insurance(ins_id)
+    DB.exec("INSERT INTO doctors (insurance_id) VALUES ('#{ins_id}');")
+    @insurance_id = ins_id
+  end
 end
